@@ -1,16 +1,15 @@
 from fastapi import FastAPI
 
-from app.core.config import settings
+from app.api.v1.vendor import router as vendor_router
 
-app = FastAPI(
-    title=settings.APP_NAME,
-    version="1.0.0",
-)
+app = FastAPI(title="Studio API")
+
+app.include_router(vendor_router)
 
 
 @app.get("/")
-def root():
+def health():
     return {
-        "service": settings.APP_NAME,
-        "environment": settings.APP_ENV,
+        "status": "ok",
+        "service": "Studio API",
     }
